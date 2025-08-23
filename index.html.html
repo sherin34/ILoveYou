@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d4a574;
+            --secondary-color: #f4e8d8;
+            --accent-color: #c4957a;
+            --text-dark: #2c2c2c;
+            --text-light: #fff;
+            --gradient: linear-gradient(135deg, #d4a574 0%, #c4957a 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .heart-loading {
+            font-size: 4rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            color: #fff;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 165, 116, 0.7), rgba(196, 149, 122, 0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation Dots */
+        .hero-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        /* Love Note Section */
+        .love-note-section {
+            background: linear-gradient(rgba(244, 232, 216, 0.9), rgba(244, 232, 216, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hearts" patternUnits="userSpaceOnUse" width="20" height="20"><path d="M10,6 C6,2 2,6 10,14 C18,6 14,2 10,6 Z" fill="%23d4a574" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23hearts)"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .love-note-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .love-note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .love-note-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+
+        /* Early Days Section */
+        .early-days-section {
+            background: #fafafa;
+        }
+
+        .memory-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .memory-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 250px;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-img::before {
+            content: '📷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+        }
+
+        .memory-content {
+            padding: 1.5rem;
+        }
+
+        .memory-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .memory-text {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Wedding Section */
+        .wedding-section {
+            background: linear-gradient(135deg, #f8f4f0 0%, #f0e8d8 100%);
+        }
+
+        .wedding-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .wedding-photo {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+            background: var(--gradient);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wedding-photo::before {
+            content: '💒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            z-index: 1;
+        }
+
+        .wedding-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .wedding-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .wedding-photo:hover .wedding-caption {
+            transform: translateY(0);
+        }
+
+        /* Photo Gallery Section */
+        .gallery-section {
+            background: #fff;
+        }
+
+        .year-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .year-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .year-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .year-btn:hover::before,
+        .year-btn.active::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .year-btn:hover,
+        .year-btn.active {
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: var(--secondary-color);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item::before {
+            content: '🖼️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Thanks Section */
+        .thanks-section {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .thanks-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .thanks-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .thanks-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .love-note-card {
+                padding: 2rem;
+            }
+            
+            .year-selector {
+                gap: 0.5rem;
+            }
+            
+            .year-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="heart-loading">💕</div>
+            <h3 style="margin-top: 1rem; font-family: 'Dancing Script', cursive;">Loading Our Love Story...</h3>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-slideshow">
+            <div class="hero-slide active" style="background-image: linear-gradient(45deg, #d4a574, #c4957a);"></div>
+            <div class="hero-slide" style="background-image: linear-gradient(45deg, #c4957a, #d4a574);"></div>
+            <div class="hero-slide" style="background-image: linear-gradient(45deg, #f4e8d8, #d4a574);"></div>
+        </div>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">Our Love Story</h1>
+                <p class="hero-subtitle">Four Years of Beautiful Memories</p>
+            </div>
+        </div>
+        <div class="hero-nav">
+            <div class="nav-dot active" data-slide="0"></div>
+            <div class="nav-dot" data-slide="1"></div>
+            <div class="nav-dot" data-slide="2"></div>
+        </div>
+    </section>
+
+    <!-- Love Note Section -->
+    <section class="love-note-section section">
+        <div class="container">
+            <h2 class="section-title">A Note From My Heart</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="love-note-card">
+                        <p class="love-note-text">
+                            "Every moment with you feels like a beautiful dream that I never want to wake up from. You are my sunshine on cloudy days, my anchor in stormy seas, and my home wherever we are. Thank you for making every day an adventure filled with love, laughter, and endless joy. Here's to many more years of creating beautiful memories together."
+                        </p>
+                        <div style="text-align: center; margin-top: 2rem; font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--primary-color);">
+                            With all my love ❤️
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Early Days Section -->
+    <section class="early-days-section section">
+        <div class="container">
+            <h2 class="section-title">Our Early Days</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="memory-card">
+                        <div class="memory-img"></div>
+                        <div class="memory-content">
+                            <div class="memory-date">2021 - First Meeting</div>
+                            <p class="memory-text">The day our paths crossed and everything changed. Little did we know this was the beginning of our forever.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="memory-card">
+                        <div class="memory-img"></div>
+                        <div class="memory-content">
+                            <div class="memory-date">2021 - First Date</div>
+                            <p class="memory-text">Nervous butterflies and endless conversations that made hours feel like minutes. The perfect start to our journey.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="memory-card">
+                        <div class="memory-img"></div>
+                        <div class="memory-content">
+                            <div class="memory-date">2022 - Anniversary</div>
+                            <p class="memory-text">Celebrating one year of love, laughter, and learning about each other. The first of many milestones.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wedding Section -->
+    <section class="wedding-section section">
+        <div class="container">
+            <h2 class="section-title">💒 Our Wedding Day</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: var(--text-dark); margin-bottom: 2rem;">February 2, 2025 - The day we promised forever</p>
+            <div class="wedding-gallery">
+                <div class="wedding-photo">
+                    <div class="wedding-caption">
+                        <h4>The Ceremony</h4>
+                        <p>Saying "I do" surrounded by our loved ones</p>
+                    </div>
+                </div>
+                <div class="wedding-photo">
+                    <div class="wedding-caption">
+                        <h4>First Dance</h4>
+                        <p>Dancing to our favorite song as husband and wife</p>
+                    </div>
+                </div>
+                <div class="wedding-photo">
+                    <div class="wedding-caption">
+                        <h4>The Kiss</h4>
+                        <p>Sealing our love with the perfect kiss</p>
+                    </div>
+                </div>
+                <div class="wedding-photo">
+                    <div class="wedding-caption">
+                        <h4>With Family</h4>
+                        <p>Celebrating with those who matter most</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="gallery-section section">
+        <div class="container">
+            <h2 class="section-title">Our Memory Gallery</h2>
+            <div class="year-selector">
+                <button class="year-btn active" data-year="2021">2021 - Beginning</button>
+                <button class="year-btn" data-year="2022">2022 - Growing</button>
+                <button class="year-btn" data-year="2023">2023 - Exploring</button>
+                <button class="year-btn" data-year="2024">2024 - Preparing</button>
+                <button class="year-btn" data-year="2025">2025 - Forever</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Thanks Section -->
+    <section class="thanks-section section">
+        <div class="container">
+            <div class="thanks-content">
+                <h2 class="thanks-title">Thank You for Visiting</h2>
+                <p class="thanks-text">
+                    Thank you for taking the time to journey through our love story. Your presence in our lives, whether near or far, means the world to us. We're grateful for the love and support from family and friends like you who make our story even more beautiful.
+                </p>
+                <div style="margin-top: 2rem; font-size: 2rem;">💕✨💕</div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Loading Screen
+            setTimeout(function() {
+                $('#loading-screen').fadeOut(500);
+            }, 2000);
+
+            // Hero Slideshow
+            let currentSlide = 0;
+            const slides = $('.hero-slide');
+            const dots = $('.nav-dot');
+            
+            function showSlide(index) {
+                slides.removeClass('active');
+                dots.removeClass('active');
+                slides.eq(index).addClass('active');
+                dots.eq(index).addClass('active');
+            }
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+            
+            // Auto-advance slides
+            setInterval(nextSlide, 5000);
+            
+            // Dot navigation
+            dots.click(function() {
+                currentSlide = $(this).data('slide');
+                showSlide(currentSlide);
+            });
+
+            // Animate memory cards on scroll
+            function animateOnScroll() {
+                $('.memory-card').each(function() {
+                    const elementTop = $(this).offset().top;
+                    const elementBottom = elementTop + $(this).outerHeight();
+                    const viewportTop = $(window).scrollTop();
+                    const viewportBottom = viewportTop + $(window).height();
+                    
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('animate');
+                    }
+                });
+            }
+            
+            $(window).on('scroll', animateOnScroll);
+            animateOnScroll(); // Initial check
+
+            // Gallery Year Filter
+            const galleryData = {
+                '2021': [
+                    'First meeting', 'First date', 'Coffee shop visits', 'Park walks',
+                    'Movie nights', 'First trip', 'Holiday celebration', 'New Year together'
+                ],
+                '2022': [
+                    'Anniversary celebration', 'Summer vacation', 'Family meeting', 'Birthday surprise',
+                    'Concert together', 'Weekend getaways', 'Cooking together', 'Fall adventures'
+                ],
+                '2023': [
+                    'New home', 'Travel adventures', 'Friend gatherings', 'Holiday season',
+                    'Spring flowers', 'Beach days', 'Mountain hiking', 'City exploration'
+                ],
+                '2024': [
+                    'Engagement', 'Wedding planning', 'Pre-wedding shoots', 'Bachelor/Bachelorette',
+                    'Venue visits', 'Dress shopping', 'Ring selection', 'Final preparations'
+                ],
+                '2025': [
+                    'Wedding day', 'Honeymoon', 'New beginnings', 'First home as married',
+                    'Thank you cards', 'Wedding album', 'Anniversary planning', 'Future dreams'
+                ]
+            };
+            
+            function loadGallery(year) {
+                const grid = $('#galleryGrid');
+                grid.empty();
+                
+                const photos = galleryData[year] || [];
+                photos.forEach((title, index) => {
+                    const item = $(`
+                        <div class="gallery-item" style="animation-delay: ${index * 0.1}s">
+                            <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; 
+                                        background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; 
+                                        border-radius: 5px; font-size: 0.8rem; text-align: center;">
+                                ${title}
+                            </div>
+                        </div>
+                    `);
+                    grid.append(item);
+                });
+                
+                // Animate gallery items
+                setTimeout(() => {
+                    $('.gallery-item').each(function(index) {
+                        $(this).css({
+                            opacity: '0',
+                            transform: 'translateY(20px)'
+                        }).delay(index * 100).animate({
+                            opacity: 1
+                        }, 300).css('transform', 'translateY(0)');
+                    });
+                }, 100);
+            }
+            
+            $('.year-btn').click(function() {
+                $('.year-btn').removeClass('active');
+                $(this).addClass('active');
+                const year = $(this).data('year');
+                loadGallery(year);
+            });
+            
+            // Load initial gallery
+            loadGallery('2021');
+
+            // Smooth scrolling for any anchor links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if( target.length ) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 80
+                    }, 1000);
+                }
+            });
+
+            // Add floating hearts animation
+            function createFloatingHeart() {
+                const heart = $('<div style="position: fixed; color: #d4a574; font-size: 1rem; pointer-events: none; z-index: 1000;">💕</div>');
+                heart.css({
+                    left: Math.random() * $(window).width() + 'px',
+                    top: $(window).height() + 'px'
+                });
+                $('body').append(heart);
+                
+                heart.animate({
+                    top: -50 + 'px',
+                    opacity: 0
+                }, 3000, function() {
+                    heart.remove();
+                });
+            }
+            
+            // Create floating hearts periodically
+            setInterval(createFloatingHeart, 3000);
+        });
+    </script>
+</body>
+</html>
